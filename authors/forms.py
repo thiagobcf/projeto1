@@ -100,7 +100,8 @@ class RegisterForm(forms.ModelForm):
 
         if exists:
             raise ValidationError(
-                'User e-mail is already in use', code='invalid')
+                'User e-mail is already in use', code='invalid',
+            )
 
         return email
 
