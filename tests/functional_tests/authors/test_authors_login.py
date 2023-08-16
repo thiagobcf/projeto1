@@ -8,7 +8,7 @@ from .base import AuthorsBaseTest
 
 @pytest.mark.functional_test
 class AuthorsLoginTest(AuthorsBaseTest):
-    def test_user_valid_data_can_login_sucessfully(self):
+    def test_user_valid_data_can_login_successfully(self):
         string_password = 'pass'
         user = User.objects.create_user(
             username='my_user', password=string_password
@@ -32,5 +32,16 @@ class AuthorsLoginTest(AuthorsBaseTest):
         # Usuário vê a mensagem de login com sucesso e seu nome
         self.assertIn(
             f'Your are logged in with {user.username}.',
+            self.browser.find_element(By.TAG_NAME, 'body').text
+        )
+
+    def test_login_create_raises_404_if_not_POST_method(self):
+        self.browser.get(
+            self.live_server_url +
+            reverse('authors:login_create')
+        )
+
+        self.assertIn(
+            'Not Found',
             self.browser.find_element(By.TAG_NAME, 'body').text
         )
