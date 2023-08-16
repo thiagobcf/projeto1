@@ -1,6 +1,6 @@
 {
     "editor.fontFamily": "Fira Code ",
-    "editor.fontSize": 14,
+    "editor.fontSize": 14.5,
     "editor.fontLigatures": true,
     "python.languageServer": "Pylance", // ms-python.vscode-pylance
     "python.testing.unittestEnabled": false, // ms-python.python
