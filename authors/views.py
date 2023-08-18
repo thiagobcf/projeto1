@@ -4,9 +4,9 @@ from django.contrib.auth.decorators import login_required
 from django.http import Http404
 from django.shortcuts import redirect, render
 from django.urls import reverse
-from recipes.models import Recipe
 
 from authors.forms.recipe_form import AuthorRecipeForm
+from recipes.models import Recipe
 
 from .forms import LoginForm, RegisterForm
 
@@ -34,7 +34,7 @@ def register_create(request):
         user.save()
         messages.success(request, 'Your user is created, please log in.')
 
-        del(request.session['register_form_data'])
+        del (request.session['register_form_data'])
         return redirect(reverse('authors:login'))
 
     return redirect('authors:register')
@@ -169,3 +169,19 @@ def dashboard_recipe_new(request):
             'form_action': reverse('authors:dashboard_recipe_new')
         }
     )
+
+
+@login_required(login_url='authors:login', redirect_field_name='next')
+def dashboard_recipe_delete(request, id):
+    recipe = Recipe.objects.filter(
+        is_published=False,
+        author=request.user,
+        pk=id,
+    ).first()
+
+    if not recipe:
+        raise Http404()
+
+    recipe.delete()
+    messages.success(request, 'Deleted successfully.')
+    return redirect(reverse('authors:dashboard'))
