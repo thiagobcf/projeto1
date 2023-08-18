@@ -1,10 +1,9 @@
 from unittest import TestCase
 
+from authors.forms import RegisterForm
 from django.test import TestCase as DjangoTestCase
 from django.urls import reverse
 from parameterized import parameterized
-
-from authors.forms import RegisterForm
 
 
 class AuthorRegisterFormUnitTest(TestCase):
@@ -164,8 +163,10 @@ class AuthorRegisterFormIntegrationTest(DjangoTestCase):
         })
 
         self.client.post(url, data=self.form_data, follow=True)
+
         is_authenticated = self.client.login(
             username='testuser',
             password='@Bc123456'
         )
+
         self.assertTrue(is_authenticated)

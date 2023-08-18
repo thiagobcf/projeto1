@@ -41,7 +41,7 @@ class RecipeModelTest(RecipeTestBase):
         recipe = self.make_recipe_no_defaults()
         self.assertFalse(
             recipe.preparation_steps_is_html,
-            msg='Recipe is_published is not False',
+            msg='Recipe preparation_steps_is_html is not False',
         )
 
     def test_recipe_is_published_is_false_by_default(self):
@@ -56,6 +56,8 @@ class RecipeModelTest(RecipeTestBase):
         self.recipe.title = needed
         self.recipe.full_clean()
         self.recipe.save()
-        self.assertEqual(str(self.recipe), needed,
-                         msg=f'Recipe string representation must be '
-                         f'"{needed}" but "{str(self.recipe)}" was received.')
+        self.assertEqual(
+            str(self.recipe), needed,
+            msg=f'Recipe string representation must be '
+                f'"{needed}" but "{str(self.recipe)}" was received.'
+        )
